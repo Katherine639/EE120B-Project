@@ -7,6 +7,11 @@ int16_t U_D;
 int16_t L_R;
 
 typedef unsigned char u_char;
+u_char cursor[] = {2, 4};
+//flag for lighting  the cursor
+u_char cursor_on;
+//flag for blinking the cursor
+u_char cursor_blink;
 
 void ADC_init()
 {
