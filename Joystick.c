@@ -1,3 +1,11 @@
+#include <avr/io.h>
+#include "timer.h"
+#include "scheduler.h"
+#include "io.c"
+
+int16_t U_D;
+int16_t L_R;
+
 void ADC_init()
 {
 	ADMUX = (1<<REFS0);
