@@ -6,6 +6,8 @@
 int16_t U_D;
 int16_t L_R;
 
+typedef unsigned char u_char;
+
 void ADC_init()
 {
 	ADMUX = (1<<REFS0);
@@ -54,4 +56,51 @@ int main(void)
 		tmp = (tmp == 0) ? 7 : tmp-1;
 	}
 	cursor[1] = tmp;
+}
+	
+
+//determines vertical cursor movement from joystick input
+enum CPV_States {CPV_Stay, CPV_Move};
+int TickFct_CursorPos_V(int state)
+{
+	U_D = ReadADC(2);
+	U_D -= 512;
+	switch(state)//Transitions
+	{
+		case CPV_Stay:
+			if((U_D <= 250) && (U_D > -249))
+			{
+				state = CPV_Stay;
+			}
+			else
+			{
+				state = CPV_Move;
+			}
+			break;
+		case CPV_Move:
+			if((U_D <= 250) && (U_D > -249))
+			{
+				state = CPV_Stay;
+			}
+			else
+			{
+				state = CPV_Move;
+			}
+			break;
+		default:
+			state = CPV_Stay;
+			break;
+	}
+	switch(state)//Actions
+	{
+		case CPV_Stay:
+			cursor_blink = 0;
+			break;
+		case CPV_Move:
+			moveU_D(U_D);
+			cursor_blink = 1;
+			cursor_on = 1;
+			break;
+	}
+	return state;
 }
