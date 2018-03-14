@@ -1,35 +1,23 @@
+#define F_CPU 8000000UL
 #include <avr/io.h>
- 
-#define F_CPU	4000000UL
 #include <util/delay.h>
- 
+#define LED_Direction DDRC		/* define LED Direction */
+#define LED_PORT PORTC			/* define LED port */
+
 int main(void)
 {
-	DDRA = 0xFF;	// Configure port B as output
- 
-    while(1)
-    {
-        //TODO:: Please write your application code
- 
-		PORTA = 0b00110000;		// Display Number 1
-		_delay_ms(1000);		// Wait for 1s
-		PORTA = 0b01011011;		// Display Number 2
-		_delay_ms(1000);		// Wait for 1s
-		PORTA = 0b01001111;		// Display Number 3
-		_delay_ms(1000);		// Wait for 1s
-		PORTA = 0b01100110;		// Display Number 4
-		_delay_ms(1000);		// Wait for 1s
- 
-		PORTA = 0b01110111;		// Display Letter A
-		_delay_ms(1000);		// Wait for 1s
-		PORTA = 0b00111001;		// Display Letter C
-		_delay_ms(1000);		// Wait for 1s
-		PORTA = 0b01111001;		// Display Letter E
-		_delay_ms(1000);		// Wait for 1s
-		PORTA = 0b01110001;		// Display Letter F
-		_delay_ms(1000);		// Wait for 1s
- 
-    }
- 
-	return 0;
+	LED_Direction |= 0xff;		/* define LED port direction is output */
+	LED_PORT = 0xff;
+	
+	char array[]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90};
+	/* write hex value for CA display from 0 to 9 */
+	
+	while(1)
+	{
+		for(int i=0;i<10;i++)
+		{
+			LED_PORT = array[i]; /* write data on to the LED port */
+			_delay_ms(9000); /* wait for 1 second */
+		}
+	}
 }
