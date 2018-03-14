@@ -101,3 +101,4 @@ void display_7segment(unsigned char number)
 
 	}
 }
+}
