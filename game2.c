@@ -1,7 +1,7 @@
 #include <avr/io.h>
-#include <ucr/scheduler.h>
-#include <ucr/timer.h>
-#include <ucr/io.c>
+#include "scheduler.h"
+#include "timer.h"
+#include "io.c"
 
 #define T_OBS 7         // location of top obstacle
 #define B_OBS 11        // location of bottom obstacle
